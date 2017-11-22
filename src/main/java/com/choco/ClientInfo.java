@@ -13,22 +13,24 @@ public class ClientInfo {
     private String username;
     private String address;
     private int port;
+    private final long timeoutMillSeconds = 10 * 1000;
 
-    public Date getUpdateTime() {
-        return updateTime;
+    //TODO 多线程访问 需要加锁保护
+    @Expose private Date updateTime;
+
+    public boolean isTimeOut(){
+        return new Date().after(new Date(updateTime.getTime() + timeoutMillSeconds));
     }
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
 
-    @Expose private Date updateTime = new Date();
-
-
-    public ClientInfo() {
-        username = null;
-        address = null;
-        port = -1;
+    public ClientInfo(String username, String address, int port) {
+        this.username = username;
+        this.address = address;
+        this.port = port;
+        updateTime = new Date();
     }
 
     public String getUsername() {
