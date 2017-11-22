@@ -1,0 +1,16 @@
+group 'com.choco'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile "net.sf.json-lib:json-lib:2.2.1:jdk15"
+    compile "com.google.code.gson:gson:2.8.2"
+}
