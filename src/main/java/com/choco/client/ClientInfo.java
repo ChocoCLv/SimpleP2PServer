@@ -1,10 +1,14 @@
-package com.choco;
+package com.choco.client;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import net.sf.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Base64;
 import java.util.Date;
 
 import com.google.gson.Gson;
@@ -13,13 +17,29 @@ public class ClientInfo {
     private String username;
     private String address;
     private int port;
-    private final long timeoutMillSeconds = 10 * 1000;
 
-    //TODO 多线程访问 需要加锁保护
+    @Expose(deserialize = true,serialize = false) private String token;
+    @Expose private final long timeoutMillSeconds = 10 * 1000;
     @Expose private Date updateTime;
 
     public boolean isTimeOut(){
         return new Date().after(new Date(updateTime.getTime() + timeoutMillSeconds));
+    }
+
+    public static ClientInfo fromRequestBody(InputStream body){
+        BufferedReader reader = new BufferedReader(new InputStreamReader(body));
+        String request = "";
+        String inputLine;
+
+        try {
+            while((inputLine = reader.readLine()) != null){
+                request += inputLine;
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().
+                create().fromJson(request, ClientInfo.class);
     }
 
     public void setUpdateTime(Date updateTime) {
@@ -31,6 +51,7 @@ public class ClientInfo {
         this.address = address;
         this.port = port;
         updateTime = new Date();
+
     }
 
     public String getUsername() {
@@ -39,6 +60,15 @@ public class ClientInfo {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void genToken(){
+        String t = username+address+port;
+        token = new String(Base64.getEncoder().encode(t.getBytes()));
+    }
+
+    public String getToken(){
+        return token;
     }
 
     public String toJson(){

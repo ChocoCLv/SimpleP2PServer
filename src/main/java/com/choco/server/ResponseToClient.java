@@ -1,6 +1,6 @@
 package com.choco.server;
 
-import com.choco.ClientInfo;
+import com.choco.client.ClientInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -9,23 +9,22 @@ import java.util.Collection;
 import java.util.List;
 
 public class ResponseToClient {
-    private String code;
+    private String result;
     private String msg;
     private List<ClientInfo> userInfoList = new ArrayList<>();
 
-    public ResponseToClient(String code, String msg, Collection<ClientInfo> userInfoList){
-        this.code = code;
+    public ResponseToClient(String result, String msg, Collection<ClientInfo> userInfoList){
+        this.result = result;
         this.msg = msg;
-
         this.userInfoList.addAll(userInfoList);
     }
 
-    public String getCode() {
-        return code;
+    public String getResult() {
+        return result;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public String getMsg() {
