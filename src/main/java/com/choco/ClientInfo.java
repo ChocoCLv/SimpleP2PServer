@@ -1,15 +1,29 @@
 package com.choco;
 
+import com.google.gson.annotations.Expose;
 import net.sf.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
+
 import com.google.gson.Gson;
 
 public class ClientInfo {
     private String username;
     private String address;
     private int port;
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Expose private Date updateTime = new Date();
+
 
     public ClientInfo() {
         username = null;

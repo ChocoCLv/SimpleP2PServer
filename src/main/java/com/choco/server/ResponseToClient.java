@@ -2,6 +2,7 @@ package com.choco.server;
 
 import com.choco.ClientInfo;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,7 +45,7 @@ public class ResponseToClient {
     }
 
     public String toJson(){
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return gson.toJson(this);
     }
 }
