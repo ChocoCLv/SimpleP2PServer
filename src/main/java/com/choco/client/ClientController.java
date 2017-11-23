@@ -41,15 +41,16 @@ public class ClientController {
 
     //
     public boolean addClient(ClientInfo client){
-        if(clientInfoMap.containsKey(client.getUsername())){
-            if(clientInfoMap.get(client.getUsername()).getToken().equals(client.getToken())){
-                clientInfoMap.get(client.getUsername()).setUpdateTime(new Date());
+        if(clientInfoMap.containsKey(client.getName())){
+            if(clientInfoMap.get(client.getName()).getToken().equals(client.getToken())){
+                clientInfoMap.get(client.getName()).setUpdateTime(new Date());
                 return true;
             }else{
                 return false;
             }
         }
-        clientInfoMap.put(client.getUsername(), client);
+        client.setUpdateTime(new Date());
+        clientInfoMap.put(client.getName(), client);
         client.genToken();
         return true;
     }

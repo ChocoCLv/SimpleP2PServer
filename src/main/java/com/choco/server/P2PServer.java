@@ -1,5 +1,6 @@
 package com.choco.server;
 
+import com.choco.Log;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ public class P2PServer {
     public void start() throws IOException {
         InetSocketAddress addr = new InetSocketAddress(1234);
         HttpServer server = HttpServer.create(addr,0);
+
 
         server.createContext("/", new P2PHttpHandler());
         server.setExecutor(Executors.newCachedThreadPool());

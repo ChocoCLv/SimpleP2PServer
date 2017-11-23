@@ -12,15 +12,19 @@ import java.util.Base64;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import sun.misc.Cleaner;
 
 public class ClientInfo {
-    private String username;
-    private String address;
+    @Expose
+    private String name;
+    @Expose
     private int port;
-
-    @Expose(deserialize = true,serialize = false) private String token;
-    @Expose private final long timeoutMillSeconds = 10 * 1000;
-    @Expose private Date updateTime;
+    @Expose(deserialize = false) private String address = "255.255.255.0";
+    @Expose(serialize = false) private String token;
+    @Expose(serialize = false,deserialize = false)
+    private final long timeoutMillSeconds = 10 * 1000;
+    @Expose(serialize = false,deserialize = false)
+    private Date updateTime;
 
     public boolean isTimeOut(){
         return new Date().after(new Date(updateTime.getTime() + timeoutMillSeconds));
@@ -46,24 +50,28 @@ public class ClientInfo {
         this.updateTime = updateTime;
     }
 
-    public ClientInfo(String username, String address, int port) {
-        this.username = username;
+    public ClientInfo(String name, String address, int port) {
+        this.name = name;
         this.address = address;
         this.port = port;
         updateTime = new Date();
-
+    }
+    public ClientInfo(String name, int port){
+        this.name = name;
+        this.port = port;
+        updateTime = new Date();
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void genToken(){
-        String t = username+address+port;
+        String t = name +address+port;
         token = new String(Base64.getEncoder().encode(t.getBytes()));
     }
 
@@ -98,7 +106,7 @@ public class ClientInfo {
             msgStream.read(buffer);
             String msg = new String(buffer);
             JSONObject json = JSONObject.fromObject(msg);
-            this.username = json.getString("name");
+            this.name = json.getString("name");
             this.address = json.getString("ip");
             this.port = json.getInt("port");
         }catch (IOException e){

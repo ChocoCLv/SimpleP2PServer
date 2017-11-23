@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/P2PServer.iml" filepath="$PROJECT_DIR$/.idea/modules/P2PServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/P2PServer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/P2PServer_main.iml" group="P2PServer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/P2PServer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/P2PServer_test.iml" group="P2PServer" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: net.sf.ezmorph:ezmorph:1.0.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.ezmorph/ezmorph/1.0.4/8b14a449891bac8236a5630b524234a830ac825/ezmorph-1.0.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.ezmorph/ezmorph/1.0.4/de10470738da01e4a0dbab9ea806b9f37f2bda45/ezmorph-1.0.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -3,36 +3,43 @@ package com.choco.server;
 import com.choco.client.ClientInfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class ResponseToClient {
-    private String result;
-    private String msg;
+
+
+    @Expose
+    private String token;
+    @Expose
+    private int code;
+    @Expose
     private List<ClientInfo> userInfoList = new ArrayList<>();
 
-    public ResponseToClient(String result, String msg, Collection<ClientInfo> userInfoList){
-        this.result = result;
-        this.msg = msg;
+    public ResponseToClient(int code, String token, Collection<ClientInfo> userInfoList){
+        this.code = code;
+        this.token = token;
         this.userInfoList.addAll(userInfoList);
     }
 
-    public String getResult() {
-        return result;
+
+
+    public int getCode() {
+        return code;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setCode(int code) {
+        this.code = code;
+    }
+    public String getToken() {
+        return token;
     }
 
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public List<ClientInfo> getUserInfoList() {
@@ -44,6 +51,7 @@ public class ResponseToClient {
     }
 
     public String toJson(){
+        //Gson gson = new Gson();//
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         return gson.toJson(this);
     }

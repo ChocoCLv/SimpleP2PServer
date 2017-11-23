@@ -17,17 +17,20 @@ import java.util.concurrent.*;
 public class P2PHttpHandler implements HttpHandler {
 
     ClientController clientController;
-    private final static String OPERATION_SUCCESS = "SUCCESS";
-    private final static String OPERATION_FAILED = "FAILED";
+    private final static int OPERATION_SUCCESS = 200;
+    private final static int OPERATION_FAILED = 201;
 
     public void handle(HttpExchange exchange) throws IOException{
         String requestMethod = exchange.getRequestMethod();
+        String address = exchange.getRemoteAddress().getHostString();
         if(requestMethod.equalsIgnoreCase("POST")){
+            Log.i("connetct with: " +address );
             ResponseToClient response;
             OutputStream responseBody = exchange.getResponseBody();
 
-
             ClientInfo client = ClientInfo.fromRequestBody(exchange.getRequestBody());
+            client.setAddress(address);
+            Log.i("取出的注册者信息: " + client.getName() + client.getPort());
 
             if(clientController.addClient(client)){
                 response = new ResponseToClient(OPERATION_SUCCESS,client.getToken(), clientController.getClientInfoList());
@@ -37,6 +40,7 @@ public class P2PHttpHandler implements HttpHandler {
 
             Headers responseHeaders = exchange.getResponseHeaders();
             responseHeaders.set("Content-Type", "application/json");
+            Log.i(response.toJson());
             byte[] bytes = response.toJson().getBytes();
             exchange.sendResponseHeaders(200, bytes.length);
             responseBody.write(bytes);
